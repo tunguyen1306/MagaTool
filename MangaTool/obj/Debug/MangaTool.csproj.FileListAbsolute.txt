@@ -1,0 +1,23 @@
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\bin\Debug\MangaTool.exe.config
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\bin\Debug\MangaTool.exe
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\bin\Debug\MangaTool.pdb
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\obj\Debug\MangaTool.Form1.resources
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\obj\Debug\MangaTool.Properties.Resources.resources
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\obj\Debug\MangaTool.csproj.GenerateResource.Cache
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\obj\Debug\MangaTool.exe
+c:\users\leminhloc\documents\visual studio 2012\Projects\MangaTool\MangaTool\obj\Debug\MangaTool.pdb
+C:\Users\LeMinhLoc\Documents\Visual Studio 2012\Projects\MangaTool\MangaTool\bin\Debug\Geckofx-Core.dll
+C:\Users\LeMinhLoc\Documents\Visual Studio 2012\Projects\MangaTool\MangaTool\bin\Debug\Geckofx-Winforms.dll
+C:\Users\LeMinhLoc\Documents\Visual Studio 2012\Projects\MangaTool\MangaTool\obj\Debug\MangaTool.GetImgChap.resources
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\bin\Debug\MangaTool.exe.config
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.exe
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.pdb
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\bin\Debug\MangaTool.exe
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\bin\Debug\MangaTool.pdb
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\bin\Debug\Geckofx-Core.dll
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\bin\Debug\Geckofx-Winforms.dll
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.csprojResolveAssemblyReference.cache
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.Form1.resources
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.GetImgChap.resources
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.Properties.Resources.resources
+C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.csproj.GenerateResource.Cache
