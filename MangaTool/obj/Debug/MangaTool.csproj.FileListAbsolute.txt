@@ -21,3 +21,6 @@ C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.Form1.resour
 C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.GetImgChap.resources
 C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.Properties.Resources.resources
 C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.csproj.GenerateResource.Cache
+C:\Company\App\MagaTool\MangaTool\bin\Debug\MangaTool.exe.config
+C:\Company\App\MagaTool\MangaTool\obj\Debug\MangaTool.exe
+C:\Company\App\MagaTool\MangaTool\obj\Debug\MangaTool.pdb
