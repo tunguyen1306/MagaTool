@@ -411,7 +411,7 @@
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.Size = new System.Drawing.Size(689, 20);
             this.txtUrl.TabIndex = 2;
-            this.txtUrl.Text = "http://izmanga.com/origami_fighterhiep_si_giay-452";
+            this.txtUrl.Text = "http://iztruyentranh.com/truyen-tranh/sukedachi_09";
             // 
             // btnGet
             // 

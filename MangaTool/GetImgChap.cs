@@ -118,9 +118,7 @@ namespace MangaTool
       
         
             }
-            
-          
-           
+
         }
     }
 }

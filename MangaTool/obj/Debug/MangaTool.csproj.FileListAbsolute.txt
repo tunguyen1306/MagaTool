@@ -24,3 +24,15 @@ C:\Users\ducthien\Downloads\MangaTool\MangaTool\obj\Debug\MangaTool.csproj.Gener
 C:\Company\App\MagaTool\MangaTool\bin\Debug\MangaTool.exe.config
 C:\Company\App\MagaTool\MangaTool\obj\Debug\MangaTool.exe
 C:\Company\App\MagaTool\MangaTool\obj\Debug\MangaTool.pdb
+D:\Company\Android\MagaTool\MangaTool\bin\Debug\MangaTool.exe.config
+D:\Company\Android\MagaTool\MangaTool\obj\Debug\MangaTool.exe
+D:\Company\Android\MagaTool\MangaTool\obj\Debug\MangaTool.pdb
+D:\Company\Android\MagaTool\MangaTool\bin\Debug\MangaTool.exe
+D:\Company\Android\MagaTool\MangaTool\bin\Debug\MangaTool.pdb
+D:\Company\Android\MagaTool\MangaTool\bin\Debug\Geckofx-Core.dll
+D:\Company\Android\MagaTool\MangaTool\bin\Debug\Geckofx-Winforms.dll
+D:\Company\Android\MagaTool\MangaTool\obj\Debug\MangaTool.csprojResolveAssemblyReference.cache
+D:\Company\Android\MagaTool\MangaTool\obj\Debug\MangaTool.Form1.resources
+D:\Company\Android\MagaTool\MangaTool\obj\Debug\MangaTool.GetImgChap.resources
+D:\Company\Android\MagaTool\MangaTool\obj\Debug\MangaTool.Properties.Resources.resources
+D:\Company\Android\MagaTool\MangaTool\obj\Debug\MangaTool.csproj.GenerateResource.Cache
