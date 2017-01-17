@@ -239,7 +239,7 @@ namespace MangaTool
                                     break;
                                 case "manga_auth":
                                     item.Manga_auth = chap.Mana_value;
-
+                                
                                     break;
                                 case "manga_type":
                                     item.Maga_type = chap.Mana_value;
@@ -265,12 +265,7 @@ namespace MangaTool
 
 
                             }
-                            if (j == 0 && i == 1)
-                            {
-                                var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=" + item.Manga_auth.Trim() + " where IdAdvertManga=" + IdAdvertManga;
-                                Tools.ExcuteDatasetSql(sqlUpdate);
-
-                            }
+                     
 
                             switch (chap.Manga_property)
                             {
@@ -279,6 +274,8 @@ namespace MangaTool
                                     break;
                                 case "manga_auth":
                                     item.Manga_auth = chap.Mana_value;
+                                     var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=" + item.Manga_auth.Trim() + " where IdAdvertManga=" + IdAdvertManga;
+                                 Tools.ExcuteDatasetSql(sqlUpdate);
                                     break;
                                 case "manga_type":
                                     item.Maga_type = chap.Mana_value;
@@ -381,8 +378,8 @@ namespace MangaTool
            
         
         }
-        string urlWeb = "D:/Company/WebSite/AdminGoldNew/AdminGold/ApiManga/file";
-        //string urlWeb =Application.StartupPath;
+        //string urlWeb = "D:/Company/WebSite/AdminGoldNew/AdminGold/ApiManga/file";
+       string urlWeb =Application.StartupPath;
         string vungChap = ".vung-doc";
         int indexP = 0;
         List<String> listLinkError = new List<string>();
