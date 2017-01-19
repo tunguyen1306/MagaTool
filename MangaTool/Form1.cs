@@ -239,12 +239,12 @@ namespace MangaTool
                                     break;
                                 case "manga_auth":
                                     item.Manga_auth = chap.Mana_value;
-                                    var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=N'" + item.Manga_auth.Trim().Replace("  ", " ").Replace("Tác giả :", "").Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
+                                    var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=N'" + item.Manga_auth.Trim().Replace("  ", " ").Replace("Tác giả :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
                                     Tools.ExcuteDatasetSql(sqlUpdate);
                                     break;
                                 case "manga_type":
                                     item.Maga_type = chap.Mana_value;
-                                    var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
+                                    var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
                                     Tools.ExcuteDatasetSql(sqlUpdatedType);
                                     break;
                                 case "manga_img":
@@ -264,7 +264,7 @@ namespace MangaTool
                             {
                                 ////Insert Name Manga
                                var sqlget = "select top 1 * from tblAdvertMangas where NameAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim() + "' order by IdAdvertManga desc";
-                               var sqlAdd = "insert into tblAdvertMangas values (N'" + item.Manga_name.Replace("  ", " ").Trim() + "',N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "',N'" + item.Manga_name.Trim() + "',N'" + chap.Mana_value.Trim() + "',1,1,1,1,'')";
+                               var sqlAdd = "insert into tblAdvertMangas values (N'" + item.Manga_name.Replace("  ", " ").Trim() + "',N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "',N'" + item.Manga_name.Trim() + "',N'" + chap.Mana_value.Trim() + "',1,1,1,1,'',1)";
                                var countAdd= Tools.ExcuteDatasetSql(sqlget);
                                if (countAdd.Tables[0].Rows.Count<=0)
                                 {
@@ -292,12 +292,12 @@ namespace MangaTool
                                     break;
                                 case "manga_auth":
                                     item.Manga_auth = chap.Mana_value;
-                                    var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=N'" + item.Manga_auth.Trim().Replace("  ", " ").Replace("Tác giả :", "").Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
+                                    var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=N'" + item.Manga_auth.Trim().Replace("  ", " ").Replace("Tác giả :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
                                  Tools.ExcuteDatasetSql(sqlUpdate);
                                     break;
                                 case "manga_type":
                                     item.Maga_type = chap.Mana_value;
-                                    var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
+                                    var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
                                       Tools.ExcuteDatasetSql(sqlUpdatedType);
                                     break;
                                 case "manga_img":
@@ -402,9 +402,10 @@ namespace MangaTool
            
         
         }
-        //string urlWeb = "D:/Company/WebSite/AdminGoldNew/AdminGold/ApiManga/file";
+        string urlWeb = "D:/Company/WebSite/AdminGoldNew/AdminGold/ApiManga/file";
         string urlWebdata = "http://manga.vangia.net/file";
-       string urlWeb =Application.StartupPath;
+     
+        //string urlWeb =Application.StartupPath;
         string vungChap = ".vung-doc";
         int indexP = 0;
         List<String> listLinkError = new List<string>();
