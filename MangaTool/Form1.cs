@@ -402,7 +402,7 @@ namespace MangaTool
            
         
         }
-        string urlWeb = "D:/Company/WebSite/AdminGoldNew/AdminGold/ApiManga/file";
+        string urlWeb = "D:/file";
         string urlWebdata = "http://manga.vangia.net/file";
      
         //string urlWeb =Application.StartupPath;
