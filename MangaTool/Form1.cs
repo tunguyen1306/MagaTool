@@ -26,6 +26,13 @@ namespace MangaTool
             InitializeComponent();
 
         }
+        public Form1(String currentLink)
+        {
+            InitializeComponent();
+            this.currentLink = currentLink;
+            txtUrl.Text = this.currentLink;
+
+        }
         void GetIzManaga()
         {
 
@@ -123,7 +130,8 @@ namespace MangaTool
         {
             cbbInfomation.SelectedIndex = 0;
             cbbInfomation2.SelectedIndex = 0;
-           GetIzManaga();
+            GetIzManaga();
+            btnGet_Click(null, null);
            // GetTuoithodudoi();
         }
 
@@ -158,27 +166,16 @@ namespace MangaTool
             chapterMangaBindingSource.EndEdit();
         }
 
-        Queue<String> qLink=new Queue<string>();
+      
         String currentLink = String.Empty;
         private void btnGet_Click(object sender, EventArgs e)
         {
-            if(currentLink==String.Empty)
-            {
-                String[] arrayLinkSplit = txtUrl.Text.Split(',');
-                for (int i = 0; i < arrayLinkSplit.Length; i++)
-                {
-                    qLink.Enqueue(arrayLinkSplit[i]);
-
-                   
-                }
-            }
-            if(qLink.Count>0)
-            {
-                currentLink= qLink.Dequeue();
+           
+              
                 check = false;
                 geckoWebBrowser1.Navigate(currentLink);
                 geckoWebBrowser1.DocumentCompleted += geckoWebBrowser1_DocumentCompleted;
-            }
+           
            
             
         }
@@ -634,7 +631,7 @@ namespace MangaTool
                         wk.RunWorkerCompleted += (s, e) =>
                         {
 
-                            btnGet_Click(null, null);
+                            this.Close();
 
                         };
                         wk.RunWorkerAsync(item);
