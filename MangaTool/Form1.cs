@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 
 namespace MangaTool
 {
@@ -157,11 +158,29 @@ namespace MangaTool
             chapterMangaBindingSource.EndEdit();
         }
 
+        Queue<String> qLink=new Queue<string>();
+        String currentLink = String.Empty;
         private void btnGet_Click(object sender, EventArgs e)
         {
-            check = false;
-            geckoWebBrowser1.Navigate(txtUrl.Text);
-            geckoWebBrowser1.DocumentCompleted += geckoWebBrowser1_DocumentCompleted;
+            if(currentLink==String.Empty)
+            {
+                String[] arrayLinkSplit = txtUrl.Text.Split(',');
+                for (int i = 0; i < arrayLinkSplit.Length; i++)
+                {
+                    qLink.Enqueue(arrayLinkSplit[i]);
+
+                   
+                }
+            }
+            if(qLink.Count>0)
+            {
+                currentLink= qLink.Dequeue();
+                check = false;
+                geckoWebBrowser1.Navigate(currentLink);
+                geckoWebBrowser1.DocumentCompleted += geckoWebBrowser1_DocumentCompleted;
+            }
+           
+            
         }
         bool check = false;
         void geckoWebBrowser1_DocumentCompleted(object sender, Gecko.Events.GeckoDocumentCompletedEventArgs e)
@@ -201,12 +220,13 @@ namespace MangaTool
               head.AppendChild(script);*/
 
         }
-        MangaItem item = new MangaItem();
+        MangaItem item=null;
+        public int IdAdvertManga = 0; public int IdAdvertChapManga = 0;
+        public int IdChapterManga = 0;
         private void button1_Click_1(object sender, EventArgs e)
         {
-
-            var IdAdvertManga=0; var IdAdvertChapManga = 0;
-            var IdChapterManga = 0;
+            item = new MangaItem();
+           
             listLinkError = new List<string>();
             List<InfomationManga> info = new List<InfomationManga>();
             List<Gecko.GeckoNode> listNode = geckoWebBrowser1.Document.GetElementsByClassName("info-data").ToList();
@@ -264,7 +284,7 @@ namespace MangaTool
                             {
                                 ////Insert Name Manga
                                var sqlget = "select top 1 * from tblAdvertMangas where NameAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim() + "' order by IdAdvertManga desc";
-                               var sqlAdd = "insert into tblAdvertMangas values (N'" + item.Manga_name.Replace("  ", " ").Trim() + "',N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "',N'" + item.Manga_name.Trim() + "',N'" + chap.Mana_value.Trim() + "',1,1,1,1,'',1)";
+                               var sqlAdd = "insert into tblAdvertMangas values (N'" + item.Manga_name.Replace("  ", " ").Trim() + "',N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "',N'" + item.Manga_name.Trim() + "',N'" + chap.Mana_value.Trim() + "',1,1,1,1,'',1,'1,2,3',39)";
                                var countAdd= Tools.ExcuteDatasetSql(sqlget);
                                if (countAdd.Tables[0].Rows.Count<=0)
                                 {
@@ -278,47 +298,47 @@ namespace MangaTool
                                    var sqlgetId = "select top 1 IdAdvertManga from tblAdvertMangas where NameAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim() + "' order by IdAdvertManga desc";
                                    var dtGetID = Tools.ExcuteDatasetSql(sqlgetId);
                                    IdAdvertManga = (int)dtGetID.Tables[0].Rows[0]["IdAdvertManga"];
-                                   var sqlUpdate = "update tblAdvertMangas set NameAdvertManga =N'" + item.Manga_name.Replace("  ", " ").Trim() + "',DesAdvertManga =N'" + item.Manga_des.Replace("  ", " ").Trim() + "', CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=N'" + item.Manga_auth.Trim() + "' where IdAdvertManga=" + IdAdvertManga;
+                                   var sqlUpdate = "update tblAdvertMangas set NameAdvertManga =N'" + item.Manga_name.Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
                                    Tools.ExcuteDatasetSql(sqlUpdate);
                                }
                               
                             }
                      
 
-                            switch (chap.Manga_property)
-                            {
-                                case "manga_name":
-                                    item.Manga_name = chap.Mana_value;
-                                    break;
-                                case "manga_auth":
-                                    item.Manga_auth = chap.Mana_value;
-                                    var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=N'" + item.Manga_auth.Trim().Replace("  ", " ").Replace("Tác giả :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
-                                 Tools.ExcuteDatasetSql(sqlUpdate);
-                                    break;
-                                case "manga_type":
-                                    item.Maga_type = chap.Mana_value;
-                                    var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
-                                      Tools.ExcuteDatasetSql(sqlUpdatedType);
-                                    break;
-                                case "manga_img":
-                                    item.Manga_img = chap.Mana_value;
-                                    var sqlUpdatedImg = "update tblAdvertMangas set ImgAdvertManga=N'" + item.Manga_img.Trim().Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
-                                    Tools.ExcuteDatasetSql(sqlUpdatedImg);
-                                    break;
-                                case "manga_des":
-                                    item.Manga_des = chap.Mana_value;
-                                    var sqlUpdatedes = "update tblAdvertMangas set DesAdvertManga=N'" + item.Manga_des.Trim().Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
-                                    Tools.ExcuteDatasetSql(sqlUpdatedes);
-                                    break;
-                                default:
-                                    break;
-                            }
+                            //switch (chap.Manga_property)
+                            //{
+                            //    case "manga_name":
+                            //        item.Manga_name = chap.Mana_value;
+                            //        break;
+                            //    case "manga_auth":
+                            //        item.Manga_auth = chap.Mana_value;
+                            //        var sqlUpdate = "update tblAdvertMangas set CodeAdvertManga=N'" + item.Manga_name.Replace("  ", " ").Trim().UrlFrendly() + "-" + IdAdvertManga + "',NameAuthorAdvertManga=N'" + item.Manga_auth.Trim().Replace("  ", " ").Replace("Tác giả :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
+                            //     Tools.ExcuteDatasetSql(sqlUpdate);
+                            //        break;
+                            //    case "manga_type":
+                            //        item.Maga_type = chap.Mana_value;
+                            //        var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
+                            //          Tools.ExcuteDatasetSql(sqlUpdatedType);
+                            //        break;
+                            //    case "manga_img":
+                            //        item.Manga_img = chap.Mana_value;
+                            //        var sqlUpdatedImg = "update tblAdvertMangas set ImgAdvertManga=N'" + item.Manga_img.Trim().Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
+                            //        Tools.ExcuteDatasetSql(sqlUpdatedImg);
+                            //        break;
+                            //    case "manga_des":
+                            //        item.Manga_des = chap.Mana_value;
+                            //        var sqlUpdatedes = "update tblAdvertMangas set DesAdvertManga=N'" + item.Manga_des.Trim().Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
+                            //        Tools.ExcuteDatasetSql(sqlUpdatedes);
+                            //        break;
+                            //    default:
+                            //        break;
+                            //}
 
                             info.Add(chap);
                           
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                     }
@@ -375,12 +395,33 @@ namespace MangaTool
                     itemChap.Chap_name = "Chap 0";
                 }
                 item.ListCha.Add(itemChap);
-                var sqlAddChapter = "insert into tblChapterMangas values (N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "',1,"+IdAdvertManga+")";
-                Tools.ExcuteDatasetSql(sqlAddChapter);
-                var sqlgetIdChapter = "select top 1 * from tblChapterMangas where NameChapterManga=N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "' order by IdChapterManga desc";
-                var dtGetIDChapter = Tools.ExcuteDatasetSql(sqlgetIdChapter);
-                IdChapterManga = (int)dtGetIDChapter.Tables[0].Rows[0]["IdChapterManga"];
-                IdAdvertChapManga = (int)dtGetIDChapter.Tables[0].Rows[0]["IdAdvertManga"];
+
+                var sqlgetNameChap = "select * from tblChapterMangas where NameChapterManga=N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "' and IdAdvertManga="+IdAdvertManga+" order by IdChapterManga desc";
+                var dtGetNameChapter = Tools.ExcuteDatasetSql(sqlgetNameChap);
+                
+               
+                if (dtGetNameChapter.Tables[0].Rows.Count<=0)
+                {
+                    var sqlAddChapter = "insert into tblChapterMangas values (N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "',1," + IdAdvertManga + ")";
+                    Tools.ExcuteDatasetSql(sqlAddChapter);
+                    var sqlgetIDChap = "select * from tblChapterMangas where NameChapterManga=N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "' and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
+                    var dtGetIDChapter1 = Tools.ExcuteDatasetSql(sqlgetNameChap);
+                    IdChapterManga = (int)dtGetIDChapter1.Tables[0].Rows[0]["IdChapterManga"];
+                    IdAdvertChapManga = (int)dtGetIDChapter1.Tables[0].Rows[0]["IdAdvertManga"];
+                }
+                else
+                {
+                    IdChapterManga = (int)dtGetNameChapter.Tables[0].Rows[0]["IdChapterManga"];
+                    var sqlUpdateChapter = "update tblChapterMangas set NameChapterManga=N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "' where IdChapterManga=" + IdChapterManga + " and IdAdvertManga=" + IdAdvertManga + "";
+                    Tools.ExcuteDatasetSql(sqlUpdateChapter);
+                    var sqlgetIDChap = "select * from tblChapterMangas where NameChapterManga=N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "' and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
+                    var dtGetIDChapter1 = Tools.ExcuteDatasetSql(sqlgetNameChap);
+                    IdChapterManga = (int)dtGetIDChapter1.Tables[0].Rows[0]["IdChapterManga"];
+                    IdAdvertChapManga = (int)dtGetIDChapter1.Tables[0].Rows[0]["IdAdvertManga"];
+                }
+               
+               
+               
             }
             for (int i = 0; i < totalLoad; i++)
             {
@@ -445,7 +486,8 @@ namespace MangaTool
 
                 Debug.WriteLine(item.ListCha[index].Chap_name + "_" + url + "_" + list.Count);
                 item.ListCha[index].ListImg = list;
-                string key = YLProject.AppCode.ClsFuntion.key_for_img(item.Manga_name).Replace(":","-").Replace("--","-").Replace("--", "-");
+                string keyt = YLProject.AppCode.ClsFuntion.key_for_img(item.Manga_name).Replace(":","-").Replace("--","-").Replace("--", "-");
+                string key= Regex.Replace(keyt, "[^0-9a-zA-Z]+", "-");
                 if (!Directory.Exists(urlWeb + "/" + key))
                 {
                     Directory.CreateDirectory(urlWeb + "/" + key);
@@ -496,6 +538,7 @@ namespace MangaTool
                 };
               //  wk1.RunWorkerAsync(itemchap);
 
+                              
                 if (indexP < item.ListCha.Count - 1)
                 {
                     this.indexP++;
@@ -524,10 +567,14 @@ namespace MangaTool
 
                             foreach (var charA in itmne.ListCha)
                             {
-                                var sqlgetIdChapter = "select top 1 * from tblChapterMangas where NameChapterManga=N'" + charA.Chap_name.Replace("  ", " ").Trim() + "' order by IdChapterManga desc";
-                                var dtGetIDChapter = Tools.ExcuteDatasetSql(sqlgetIdChapter);
-                                var IdChapterManga = (int)dtGetIDChapter.Tables[0].Rows[0]["IdChapterManga"];
-                               var  IdAdvertChapManga = (int)dtGetIDChapter.Tables[0].Rows[0]["IdAdvertManga"];
+
+                                var sqlgetIdChapter = "select * from tblChapterMangas where NameChapterManga=N'" + charA.Chap_name.Replace("  ", " ").Trim() + "' and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
+                                var dtGetIdChapter = Tools.ExcuteDatasetSql(sqlgetIdChapter);
+                                var idChap = dtGetIdChapter.Tables[0].Rows[0]["IdChapterManga"];
+
+                                var sqlgetImgChapter = "select * from tblImgMangas where ImgManga=N'" + urlWebdata + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml' and IdChapterManga=" + idChap + "  and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
+                                var dtGetImgChapter = Tools.ExcuteDatasetSql(sqlgetImgChapter);
+
                                 var memoryStream = new MemoryStream();
                                 var streamWriter = new StreamWriter(memoryStream, System.Text.Encoding.UTF8);
                                 new XmlSerializer(typeof(ChapterItem)).Serialize(streamWriter, charA);
@@ -543,31 +590,52 @@ namespace MangaTool
                                 {
                                     Directory.CreateDirectory(urlWeb + "/" + key);
                                 }
-                                try
+                                //try
+                                //{
+                                xdoc.Save(urlWeb + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml");
+                                if (dtGetImgChapter.Tables[0].Rows.Count <= 0)
                                 {
-                                    xdoc.Save(urlWeb + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml");
-                                    var sqlAddChapter = "insert into tblImgMangas values ('" + urlWebdata + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml" + "'," + IdChapterManga + "," + IdAdvertChapManga + ")";
+                                    var sqlAddChapter = "insert into tblImgMangas values ('" + urlWebdata + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml'," + idChap + "," + IdAdvertChapManga + ")";
                                     Tools.ExcuteDatasetSql(sqlAddChapter);
                                 }
-                                catch (Exception)
+                                else
                                 {
-
-                                    xdoc.Save(urlWeb + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace(" ", "-") + ".xml");
-                                    var sqlAddChapter = "insert into tblImgMangas values ('" + urlWebdata + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml" + "'," + IdChapterManga + "," + IdAdvertChapManga + ")";
-                                    Tools.ExcuteDatasetSql(sqlAddChapter);
-
+                                    //var sqlUpdateChapter = "Update tblImgMangas set ImgManga='" + urlWebdata + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml' where IdChapterManga=" + idChap + " and IdAdvertManga=" + IdAdvertChapManga + "";
+                                    //Tools.ExcuteDatasetSql(sqlUpdateChapter);
                                 }
-                              
+
+
+                                //}
+                                //catch (Exception)
+                                //{
+
+                                //    xdoc.Save(urlWeb + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml");
+                                //    if (dtGetIDChapter.Tables[0].Rows.Count <= 0)
+                                //    {
+                                //        var sqlAddChapter = "insert into tblImgMangas values ('" + urlWebdata + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml'," + IdChapterManga + "," + IdAdvertChapManga + ")";
+                                //        Tools.ExcuteDatasetSql(sqlAddChapter);
+                                //    }
+                                //    else
+                                //    {
+                                //        var sqlUpdateChapter = "Update tblImgMangas set ImgManga='" + urlWebdata + "/" + key + "/" + key + "-" + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml' where IdChapterManga=" + IdChapterManga + " and IdAdvertChapManga=" + IdAdvertChapManga + "";
+                                //        Tools.ExcuteDatasetSql(sqlUpdateChapter);
+                                //    }
+
+                                //}
+
                             }
 
-                          
-                            
+
+
                         };
                         wk.ProgressChanged += (s, e) =>
                         {
                         };
                         wk.RunWorkerCompleted += (s, e) =>
                         {
+
+                            btnGet_Click(null, null);
+
                         };
                         wk.RunWorkerAsync(item);
 

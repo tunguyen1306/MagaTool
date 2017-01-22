@@ -409,9 +409,9 @@
             // 
             this.txtUrl.Location = new System.Drawing.Point(6, 6);
             this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(689, 20);
+            this.txtUrl.Size = new System.Drawing.Size(400, 20);
             this.txtUrl.TabIndex = 2;
-            this.txtUrl.Text = "http://iztruyentranh.com/truyen-tranh/sukedachi_09";
+            this.txtUrl.Text = "";
             // 
             // btnGet
             // 
