@@ -17,7 +17,7 @@ namespace MangaTool
             InitializeComponent();
         }
         Queue<String> qArrayLink = new Queue<string>();
-        int count = 1;
+        int count = 2;
         public int countRun = 0;
         bool run = false;
         private void button1_Click(object sender, EventArgs e)

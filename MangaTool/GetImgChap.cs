@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Data;
 using System.Linq;
@@ -82,9 +83,13 @@ namespace MangaTool
                         (sender as Timer).Stop();
                         return;
                     }
-                    catch (Exception)
-                    {   count++;
-                        if (count > 5)
+                    catch (Exception exc)
+
+                    {
+                        Debug.WriteLine("Erro:" + exc);
+
+                        count++;
+                        if (count > 2)
                         {
                             if (ev_DelegateEventFN != null)
                             {
@@ -92,6 +97,7 @@ namespace MangaTool
                             }
                             (sender as Timer).Tick -= timer1_Tick;
                             (sender as Timer).Stop();
+                            
                             return;
                         }
 
@@ -101,7 +107,7 @@ namespace MangaTool
                 else
                 {
                     count++;
-                    if (count>5)
+                    if (count>2)
                     {
                         if (ev_DelegateEventFN != null)
                         {
