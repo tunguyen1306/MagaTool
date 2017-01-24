@@ -399,7 +399,7 @@ namespace MangaTool
                
                 if (dtGetNameChapter.Tables[0].Rows.Count<=0)
                 {
-                    var sqlAddChapter = "insert into tblChapterMangas values (N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "',1," + IdAdvertManga + ")";
+                    var sqlAddChapter = "insert into tblChapterMangas values (N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "',1," + IdAdvertManga + ",getdate())";
                     Tools.ExcuteDatasetSql(sqlAddChapter);
                     var sqlgetIDChap = "select * from tblChapterMangas where NameChapterManga=N'" + itemChap.Chap_name.Replace("  ", " ").Trim() + "' and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
                     var dtGetIDChapter1 = Tools.ExcuteDatasetSql(sqlgetNameChap);
