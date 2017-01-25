@@ -48,7 +48,9 @@ namespace MangaTool
         int count = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            GeckoScriptElement mGeckoScript = (GeckoScriptElement)geckoWebBrowser1.Document.CreateElement("script");// geckoWebBrowser1.Document.CreateElement("script");
+            try
+            {
+  GeckoScriptElement mGeckoScript = (GeckoScriptElement)geckoWebBrowser1.Document.CreateElement("script");// geckoWebBrowser1.Document.CreateElement("script");
 
           
 
@@ -124,6 +126,13 @@ namespace MangaTool
       
         
             }
+            }
+            catch (Exception)
+            {
+                    
+               
+            }
+          
 
         }
     }

@@ -28,11 +28,14 @@ namespace MangaTool
         }
         public static DataSet ExcuteDatasetSql(string sql)
         {
-            _connection = new SqlConnection(_connectionString);
+            SqlConnection _connections;
+            _connections = new SqlConnection(_connectionString);
+          
             DataSet ds = new DataSet();
-            SqlCommand com = new SqlCommand(sql, _connection);
+            SqlCommand com = new SqlCommand(sql, _connections);
             SqlDataAdapter adap = new SqlDataAdapter(com);
             adap.Fill(ds);
+            _connections.Close();
             return ds;
         }
 

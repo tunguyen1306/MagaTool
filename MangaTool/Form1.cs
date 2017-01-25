@@ -260,7 +260,7 @@ namespace MangaTool
                                     Tools.ExcuteDatasetSql(sqlUpdate);
                                     break;
                                 case "manga_type":
-                                    item.Maga_type = chap.Mana_value.Replace("'", "").Replace(",", " ");
+                                    item.Maga_type = chap.Mana_value;
                                     var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
                                     Tools.ExcuteDatasetSql(sqlUpdatedType);
                                     break;
@@ -554,7 +554,7 @@ namespace MangaTool
 
                     flowLayoutPanel1.Controls.Remove(sender as GetImgChap);
                     Debug.WriteLine(flowLayoutPanel1.Controls.Count);
-                    if (flowLayoutPanel1.Controls.Count == 0)
+                   // if (flowLayoutPanel1.Controls.Count == 0)
                     {
 
                         BackgroundWorker wk = new BackgroundWorker();
@@ -566,12 +566,25 @@ namespace MangaTool
 
                             foreach (var charA in itmne.ListCha)
                             {
+                                var filename = urlWeb + "/" + key + "/" + key;
+                                var filenamedata = urlWebdata + "/" + key + "/" + key;
+                                if (filename.Length > 200)
+                                {
+
+                                    filename = filename.Substring(0, 200);
+                                }
+                                var nameChap =
+                                    charA.Chap_name.Replace(":", "-")
+                                        .Replace("--", "-")
+                                        .Replace("  ", " ")
+                                        .Replace(" ", "-");
+                                var namechap1 = nameChap.UrlFrendly() + ".xml";
 
                                 var sqlgetIdChapter = "select * from tblChapterMangas where NameChapterManga=N'" + charA.Chap_name.Replace("  ", " ").Trim() + "' and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
                                 var dtGetIdChapter = Tools.ExcuteDatasetSql(sqlgetIdChapter);
                                 var idChap = dtGetIdChapter.Tables[0].Rows[0]["IdChapterManga"];
 
-                                var sqlgetImgChapter = "select * from tblImgMangas where ImgManga=N'" + urlWebdata + "/" + key + "/" + key + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml' and IdChapterManga=" + idChap + "  and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
+                                var sqlgetImgChapter = "select * from tblImgMangas where ImgManga=N'" + filenamedata + namechap1 + "' and IdChapterManga=" + idChap + "  and IdAdvertManga=" + IdAdvertManga + " order by IdChapterManga desc";
                                 var dtGetImgChapter = Tools.ExcuteDatasetSql(sqlgetImgChapter);
 
                                 var memoryStream = new MemoryStream();
@@ -591,20 +604,21 @@ namespace MangaTool
                                 }
                                 //try
                                 //{
-                                var filename=urlWeb + "/" + key + "/" + key + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml";
-                                var filenamedata = urlWebdata + "/" + key + "/" + key + charA.Chap_name.Replace(":", "-").Replace("--", "-").Replace("  ", " ").Replace(" ", "-") + ".xml";
-                                if (filename.Length>200)
-                                {
-
-                                    filename = filename.Substring(0, 200);
-                                }
-
-                                
+                               
                                 if (dtGetImgChapter.Tables[0].Rows.Count <= 0)
                                 {
-                                    xdoc.Save(filename);
-                                    var sqlAddChapter = "insert into tblImgMangas values ('" + filenamedata + "'," + idChap + "," + IdAdvertChapManga + ")";
-                                    Tools.ExcuteDatasetSql(sqlAddChapter);
+                                    try
+                                    {
+                                        xdoc.Save(filename + namechap1);
+                                        var sqlAddChapter = "insert into tblImgMangas values ('" + filenamedata + namechap1 + "'," + idChap + "," + IdAdvertChapManga + ")";
+                                        Tools.ExcuteDatasetSql(sqlAddChapter);
+                                    }
+                                    catch (Exception)
+                                    {
+                                            
+                                        
+                                    }
+                                    
                                 }
                                 else
                                 {
