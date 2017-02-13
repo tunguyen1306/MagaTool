@@ -53,7 +53,7 @@ namespace MangaTool
             infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_img", Manga_tagcon = "img", Manga_index = 0, Manga_tagcha = "div.manga-info-top" });
             infomationMangaBindingSource.EndEdit();
 
-            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_des", Manga_tagcon = "p", Manga_index = 0, Manga_tagcha = "div.manga-info-content" });
+            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_des", Manga_tagcon = "div", Manga_index = 0, Manga_tagcha = "div#noidungm" });
             infomationMangaBindingSource.EndEdit();
 
 
@@ -229,7 +229,7 @@ namespace MangaTool
             List<Gecko.GeckoNode> listNode = geckoWebBrowser1.Document.GetElementsByClassName("info-data").ToList();
             for (int i = 0; i < listNode.Count; i++)
             {
-              
+                var Desmanga = listNode[1].TextContent;
                 Gecko.GeckoElement node = listNode[i] as Gecko.GeckoElement;
                 for (int j = 0; j < infomationMangaBindingSource.Count; j++)
                 {
@@ -270,7 +270,7 @@ namespace MangaTool
                                     Tools.ExcuteDatasetSql(sqlUpdatedImg);
                                     break;
                                 case "manga_des":
-                                    item.Manga_des = chap.Mana_value.Replace("'", "").Replace(",", " ");
+                                    item.Manga_des = Desmanga.Replace("'", "").Replace(",", " ");
                                     var sqlUpdatedes = "update tblAdvertMangas set DesAdvertManga=N'" + item.Manga_des.Trim().Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
                                     Tools.ExcuteDatasetSql(sqlUpdatedes);
                                     break;
