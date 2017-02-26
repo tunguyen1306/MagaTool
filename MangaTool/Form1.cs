@@ -262,7 +262,24 @@ namespace MangaTool
                                 case "manga_type":
                                     item.Maga_type = chap.Mana_value;
                                     var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
-                                    Tools.ExcuteDatasetSql(sqlUpdatedType);
+                                var list1 = item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim().Split(',').ToList();
+                                foreach (var item in list1)
+                                {
+                                    var selectTypeMangas = "select top 1 * from tblTypeMangas where tblTypeMangas.NameTypeManga =N'"+ item+"'";
+                                    var dtTypeMangas = Tools.ExcuteDatasetSql(selectTypeMangas);
+                                    if (item!="" || item !=null)
+                                    {
+                                        if (dtTypeMangas.Tables[0].Rows.Count <= 0)
+                                        {
+                                            var sqlInsertTypeMangas = "INSERT INTO tblTypeMangas(NameTypeManga,StatusTypeManga)  VALUES (N'" + item + "',1)";
+                                            Tools.ExcuteDatasetSql(sqlInsertTypeMangas);
+                                        }
+                                    }
+                                    
+
+                                    
+                                }
+                               Tools.ExcuteDatasetSql(sqlUpdatedType);
                                     break;
                                 case "manga_img":
                                     item.Manga_img = chap.Mana_value.Replace("'", "").Replace(",", " ");
