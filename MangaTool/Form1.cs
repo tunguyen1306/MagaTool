@@ -37,9 +37,28 @@ namespace MangaTool
         void GetHamTruyen()
         {
 
-            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_name", Manga_tagcon = "h1.tentruyen", Manga_index = 0, Manga_tagcha = "div.wrapper_info" });
+            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_name", Manga_tagcon = "h1", Manga_index = 0, Manga_tagcha = "div.wrapper_info" });
+            infomationMangaBindingSource.EndEdit();
+            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_auth", Manga_tagcon = "p", Manga_index = 0, Manga_tagcha = "div.wrapper_info" });
+            infomationMangaBindingSource.EndEdit();
+            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_type", Manga_tagcon = ".row_theloai", Manga_index = 0, Manga_tagcha = "div.wrapper_info" });
+            infomationMangaBindingSource.EndEdit();
+            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_img", Manga_tagcon = "img", Manga_index = 0, Manga_tagcha = "div.wrapper_info" });
             infomationMangaBindingSource.EndEdit();
 
+            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_des", Manga_tagcon = "p.tomtat_truyen", Manga_index = 0, Manga_tagcha = "div.wrapper_info" });
+            infomationMangaBindingSource.EndEdit();
+
+
+            chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_name", Tag_name_info = "a", Tag_link = false, Index = 0 });
+            chapterMangaBindingSource.EndEdit();
+
+
+            chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_create", Tag_name_info = "div", Tag_link = false, Index = 1 });
+            chapterMangaBindingSource.EndEdit();
+
+            chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_link", Tag_name_info = "a", Tag_link = true, Index = 0 });
+            chapterMangaBindingSource.EndEdit();
         }
 
         void GetIzManaga()
@@ -195,27 +214,36 @@ namespace MangaTool
         bool check = false;
         void geckoWebBrowser1_DocumentCompleted(object sender, Gecko.Events.GeckoDocumentCompletedEventArgs e)
         {
+            string sc = "";string sxript = "";
             if (!check)
             {
                 GeckoScriptElement mGeckoScript = (GeckoScriptElement)geckoWebBrowser1.Document.CreateElement("script");// geckoWebBrowser1.Document.CreateElement("script");
-
-                string sxript = "";
                 for (int j = 0; j < infomationMangaBindingSource.Count; j++)
                 {
                     infomationMangaBindingSource.Position = j;
                     InfomationManga chap = infomationMangaBindingSource.Current as InfomationManga;
                     sxript += "jQuery('" + chap.Manga_tagcha + "').addClass('info-data'); ";
                 }
-                string scHamtruyen = @"
+                if (geckoWebBrowser1.Url.Host.Contains("hamtruyen.vn"))
+                {
+                    sc = @"
         jQuery('div.col-xs-8.wrapper_info').addClass('info-data');
         jQuery('.row_chap').each(function (i) {
             jQuery(this).attr('id', 'row_' + i);
         });
         jQuery('.row_chap').addClass('row-data');
     ";
-                string scIz = @"jQuery(document).ready(function(){  " + sxript + "                   jQuery('" + txtTagCha2.Text + "').each(function(i){jQuery(this).attr('id','row_'+i);}); jQuery('" + txtTagCha2.Text + "').addClass('row-data');            });";
+                }
+                if (geckoWebBrowser1.Url.Host.Contains("http://hamtruyen.vn"))
+                {
+                    sc = @"jQuery(document).ready(function(){  " + sxript + "                   jQuery('" + txtTagCha2.Text + "').each(function(i){jQuery(this).attr('id','row_'+i);}); jQuery('" + txtTagCha2.Text + "').addClass('row-data');            });";
+                }
+                
+                
+               
+               
                 mGeckoScript.Type = "text/javascript";
-                mGeckoScript.InnerHtml = scHamtruyen;
+                mGeckoScript.InnerHtml = sc;
                 geckoWebBrowser1.Document.GetElementsByTagName("head")[0].AppendChild(mGeckoScript);
                 check = true;
                 button1_Click_1(null, null);
@@ -249,7 +277,7 @@ namespace MangaTool
             List<Gecko.GeckoNode> listNode = geckoWebBrowser1.Document.GetElementsByClassName("info-data").ToList();
             for (int i = 0; i < listNode.Count; i++)
             {
-                var Desmanga = listNode[1].TextContent;
+                var Desmanga = listNode[i].TextContent;
                 Gecko.GeckoElement node = listNode[i] as Gecko.GeckoElement;
                 for (int j = 0; j < infomationMangaBindingSource.Count; j++)
                 {
@@ -409,6 +437,7 @@ namespace MangaTool
                     if (chap.Tag_link)
                     {
                         chap.Manga_value = nodeinfo.GetElementsByTagName("a")[0].GetAttribute("href");
+                      
 
 
                     }
