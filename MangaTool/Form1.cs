@@ -33,6 +33,15 @@ namespace MangaTool
             txtUrl.Text = this.currentLink;
 
         }
+
+        void GetHamTruyen()
+        {
+
+            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_name", Manga_tagcon = "h1.tentruyen", Manga_index = 0, Manga_tagcha = "div.wrapper_info" });
+            infomationMangaBindingSource.EndEdit();
+
+        }
+
         void GetIzManaga()
         {
 
@@ -41,6 +50,9 @@ namespace MangaTool
 //manga_type
 //manga_img
 //manga_des
+
+
+          
             infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_name", Manga_tagcon = "li", Manga_index = 0, Manga_tagcha = "div.manga-info-top" });
             infomationMangaBindingSource.EndEdit();
 
@@ -76,47 +88,47 @@ namespace MangaTool
 
 
 
-        void GetTuoithodudoi()
-        {
+        //void GetTuoithodudoi()
+        //{
 
-            //  manga_name
-            //manga_auth
-            //manga_type
-            //manga_img
-            //manga_des
-            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_name", Manga_tagcon = "h2", Manga_index = 0, Manga_tagcha = "div.info > div.row" });
-            infomationMangaBindingSource.EndEdit();
+        //    //  manga_name
+        //    //manga_auth
+        //    //manga_type
+        //    //manga_img
+        //    //manga_des
+        //    infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_name", Manga_tagcon = "h2", Manga_index = 0, Manga_tagcha = "div.info > div.row" });
+        //    infomationMangaBindingSource.EndEdit();
 
-            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_auth", Manga_tagcon = "span", Manga_index = 1, Manga_tagcha = "div.info > div.row" });
-            infomationMangaBindingSource.EndEdit();
+        //    infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_auth", Manga_tagcon = "span", Manga_index = 1, Manga_tagcha = "div.info > div.row" });
+        //    infomationMangaBindingSource.EndEdit();
 
-            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_type", Manga_tagcon = "span", Manga_index = 2, Manga_tagcha = "div.info > div.row" });
-            infomationMangaBindingSource.EndEdit();
+        //    infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_type", Manga_tagcon = "span", Manga_index = 2, Manga_tagcha = "div.info > div.row" });
+        //    infomationMangaBindingSource.EndEdit();
 
-            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_img", Manga_tagcon = "img", Manga_index = 0, Manga_tagcha = "div.info > div.row" });
-            infomationMangaBindingSource.EndEdit();
+        //    infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_img", Manga_tagcon = "img", Manga_index = 0, Manga_tagcha = "div.info > div.row" });
+        //    infomationMangaBindingSource.EndEdit();
 
-            infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_des", Manga_tagcon = "p", Manga_index = 0, Manga_tagcha = "div.info > div.info-content" });
-            infomationMangaBindingSource.EndEdit();
-
-
-
-            txtTagCha2.Text = "table.table-striped > tbody > tr";
-            // chap_name
-            //chap_create
-            //chap_link
-            chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_name", Tag_name_info = "td", Tag_link = false, Index = 0 });
-            chapterMangaBindingSource.EndEdit();
+        //    infomationMangaBindingSource.Add(new InfomationManga { Manga_property = "manga_des", Manga_tagcon = "p", Manga_index = 0, Manga_tagcha = "div.info > div.info-content" });
+        //    infomationMangaBindingSource.EndEdit();
 
 
-            chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_create", Tag_name_info = "td", Tag_link = false, Index = 2 });
-            chapterMangaBindingSource.EndEdit();
 
-            chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_link", Tag_name_info = "td", Tag_link = true, Index = 0 });
-            chapterMangaBindingSource.EndEdit();
-            vungChap = ".view-chapter";
+        //    txtTagCha2.Text = "table.table-striped > tbody > tr";
+        //    // chap_name
+        //    //chap_create
+        //    //chap_link
+        //    chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_name", Tag_name_info = "td", Tag_link = false, Index = 0 });
+        //    chapterMangaBindingSource.EndEdit();
 
-        }
+
+        //    chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_create", Tag_name_info = "td", Tag_link = false, Index = 2 });
+        //    chapterMangaBindingSource.EndEdit();
+
+        //    chapterMangaBindingSource.Add(new ChapterManga { Property_name = "chap_link", Tag_name_info = "td", Tag_link = true, Index = 0 });
+        //    chapterMangaBindingSource.EndEdit();
+        //    vungChap = ".view-chapter";
+
+        //}
 
         int totalLoad = 10;
         private void btnAddSetting_Click(object sender, EventArgs e)
@@ -130,7 +142,8 @@ namespace MangaTool
         {
             cbbInfomation.SelectedIndex = 0;
             cbbInfomation2.SelectedIndex = 0;
-            GetIzManaga();
+            GetHamTruyen();
+            //GetIzManaga();
             btnGet_Click(null, null);
            // GetTuoithodudoi();
         }
@@ -193,9 +206,16 @@ namespace MangaTool
                     InfomationManga chap = infomationMangaBindingSource.Current as InfomationManga;
                     sxript += "jQuery('" + chap.Manga_tagcha + "').addClass('info-data'); ";
                 }
-
+                string scHamtruyen = @"
+        jQuery('div.col-xs-8.wrapper_info').addClass('info-data');
+        jQuery('.row_chap').each(function (i) {
+            jQuery(this).attr('id', 'row_' + i);
+        });
+        jQuery('.row_chap').addClass('row-data');
+    ";
+                string scIz = @"jQuery(document).ready(function(){  " + sxript + "                   jQuery('" + txtTagCha2.Text + "').each(function(i){jQuery(this).attr('id','row_'+i);}); jQuery('" + txtTagCha2.Text + "').addClass('row-data');            });";
                 mGeckoScript.Type = "text/javascript";
-                mGeckoScript.InnerHtml = @"jQuery(document).ready(function(){  " + sxript + "                   jQuery('" + txtTagCha2.Text + "').each(function(i){jQuery(this).attr('id','row_'+i);}); jQuery('" + txtTagCha2.Text + "').addClass('row-data');            });";
+                mGeckoScript.InnerHtml = scHamtruyen;
                 geckoWebBrowser1.Document.GetElementsByTagName("head")[0].AppendChild(mGeckoScript);
                 check = true;
                 button1_Click_1(null, null);
@@ -263,15 +283,15 @@ namespace MangaTool
                                     item.Maga_type = chap.Mana_value;
                                     var sqlUpdatedType = "update tblAdvertMangas set TypeAdvertManga=N'" + item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim() + "' where IdAdvertManga=" + IdAdvertManga;
                                 var list1 = item.Maga_type.Trim().Replace("  ", " ").Replace("Thể loại :", "").Replace("  ", " ").Trim().Split(',').ToList();
-                                foreach (var item in list1)
+                                foreach (var item1 in list1)
                                 {
-                                    var selectTypeMangas = "select top 1 * from tblTypeMangas where tblTypeMangas.NameTypeManga =N'"+ item+"'";
+                                    var selectTypeMangas = "select top 1 * from tblTypeMangas where tblTypeMangas.NameTypeManga =N'"+ item1+"'";
                                     var dtTypeMangas = Tools.ExcuteDatasetSql(selectTypeMangas);
-                                    if (item!="" || item !=null)
+                                    if (item1!="" || item1 !=null)
                                     {
                                         if (dtTypeMangas.Tables[0].Rows.Count <= 0)
                                         {
-                                            var sqlInsertTypeMangas = "INSERT INTO tblTypeMangas(NameTypeManga,StatusTypeManga)  VALUES (N'" + item + "',1)";
+                                            var sqlInsertTypeMangas = "INSERT INTO tblTypeMangas(NameTypeManga,StatusTypeManga)  VALUES (N'" + item1 + "',1)";
                                             Tools.ExcuteDatasetSql(sqlInsertTypeMangas);
                                         }
                                     }
@@ -283,6 +303,14 @@ namespace MangaTool
                                     break;
                                 case "manga_img":
                                     item.Manga_img = chap.Mana_value.Replace("'", "").Replace(",", " ");
+                                    if (item.Manga_img.Trim().Replace("  ", " ").Contains("http://"))
+                                    {
+                                        item.Manga_img = item.Manga_img.Trim().Replace("  ", " ");
+                                    }
+                                    else
+                                    {
+                                        item.Manga_img = "http://" + item.Manga_img.Trim().Replace("  ", " ");
+                                    }
                                     var sqlUpdatedImg = "update tblAdvertMangas set ImgAdvertManga=N'" + item.Manga_img.Trim().Replace("  ", " ") + "' where IdAdvertManga=" + IdAdvertManga;
                                     Tools.ExcuteDatasetSql(sqlUpdatedImg);
                                     break;
