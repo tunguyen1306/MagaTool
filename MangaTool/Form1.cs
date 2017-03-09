@@ -21,6 +21,8 @@ namespace MangaTool
 {
     public partial class Form1 : Form
     {
+              private  string vungChap = "";
+     
         public Form1()
         {
             InitializeComponent();
@@ -226,6 +228,8 @@ namespace MangaTool
                 }
                 if (geckoWebBrowser1.Url.Host.Contains("hamtruyen.vn"))
                 {
+                   
+                    vungChap = ".content_chap";
                     sc = @"
         jQuery('div.col-xs-8.wrapper_info').addClass('info-data');
         jQuery('.row_chap').each(function (i) {
@@ -234,8 +238,9 @@ namespace MangaTool
         jQuery('.row_chap').addClass('row-data');
     ";
                 }
-                if (geckoWebBrowser1.Url.Host.Contains("http://hamtruyen.vn"))
+                if (geckoWebBrowser1.Url.Host.Contains("iztruyentranh.com"))
                 {
+                    vungChap = ".vung-doc";
                     sc = @"jQuery(document).ready(function(){  " + sxript + "                   jQuery('" + txtTagCha2.Text + "').each(function(i){jQuery(this).attr('id','row_'+i);}); jQuery('" + txtTagCha2.Text + "').addClass('row-data');            });";
                 }
                 
@@ -436,14 +441,26 @@ namespace MangaTool
 
                     if (chap.Tag_link)
                     {
-                        chap.Manga_value = nodeinfo.GetElementsByTagName("a")[0].GetAttribute("href");
-                      
+                        if (nodeinfo != null)
+                        {
+                            if (nodeinfo.GetElementsByTagName("a").Length > 0)
+                                chap.Manga_value = nodeinfo.GetElementsByTagName("a")[0].GetAttribute("href");
+                            else
+                            {
+                                chap.Manga_value = nodeinfo.GetAttribute("href");
 
+                            }
+
+                        }
 
                     }
                     else
                     {
-                        chap.Manga_value = nodeinfo.TextContent;
+                        if (nodeinfo !=null)
+                        {
+                            chap.Manga_value = nodeinfo.TextContent;
+                        }
+                       
                     }
                     switch (chap.Property_name)
                     {
@@ -518,12 +535,12 @@ namespace MangaTool
         string urlWebdata = "http://manga.vangia.net/file";
      
         //string urlWeb =Application.StartupPath;
-        string vungChap = ".vung-doc";
+
         int indexP = 0;
         List<String> listLinkError = new List<string>();
         void ff_ev_DelegateEventFN(object sender, List<ImgChapter> list, string url,int index)
         {
-
+            
             if (list == null)
             {
                 bool check = false;

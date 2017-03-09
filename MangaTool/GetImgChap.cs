@@ -34,6 +34,11 @@ namespace MangaTool
         int index = 0;
         public void ReloadPage(string url,string jquery,int index)
         {
+            if (!url.Contains("hamtruyen.vn") && !url.Contains("iztruyentranh"))
+            {
+                url = "http://hamtruyen.vn" + url;
+            }
+            
          
             query = jquery;
             this.url = url;
